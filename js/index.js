@@ -18,6 +18,17 @@ let y = canvas.height -30
 let dx = 2 
 let dy = -2
 
+//variables del palito
+const alturaPalo = 10
+const anchoPalo = 50
+
+let paloX = (canvas.width - anchoPalo) / 2
+let paloY = canvas.height - alturaPalo - 10
+
+let presionadoDerecha = false
+let presionadoIzquierda = false
+
+
 
 function dibujarPelota(){
     ctx.beginPath()
@@ -29,11 +40,33 @@ function dibujarPelota(){
 }
 
 
-function dibujarPalo(){}
+function dibujarPalo(){
+    ctx.fillStyle = 'rgba(14, 120, 43, 0.55)'
+    ctx.fillRect(paloX, paloY, anchoPalo, alturaPalo)
+}
 function dibujarLadrillos(){}
 
 function deteccionColision(){}
 function movimientoPelota(){
+    //rebotar en pelota en laterales
+    if(x + dx > canvas.width - radioPelota || x + dx < radioPelota){
+        dx = -dx
+    }
+
+    //rebotar pelota arriba
+
+    if(y + dy < radioPelota){
+        dy= -dy
+    }
+
+    //rebota pelota abajo
+
+    if(y + dy > canvas.height - radioPelota){
+        console.log('Game Over')
+        document.location.reload()
+    }
+
+
     x += dx
     y += dy
 }
@@ -42,7 +75,37 @@ function limpiarCanvas(){
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 }
 
-function movientoPalo(){}
+function iniciarEventos(){
+    document.addEventListener('keydown', keyDownHandler)
+    document.addEventListener('keyup', keyUpHandler)
+
+    function keyDownHandler(event){
+        const{key} =event
+        if(key === 'Right' || key === 'ArrowRight'){
+            presionadoDerecha = true
+        }else if (key === 'Left' || key === 'ArrowLeft'){
+            presionadoIzquierda = true
+    }
+}
+
+function keyUpHandler(event){
+        const{key} =event
+        if(key === 'Right' || key === 'ArrowRight'){
+            presionadoDerecha = false
+        }else if (key === 'Left' || key === 'ArrowLeft'){
+            presionadoIzquierda = false
+    }
+}
+
+}
+
+function movientoPalo(){
+    if(presionadoDerecha){
+        paloX += 7
+    }else if (presionadoIzquierda){
+        paloX -= 7
+    }
+}
 
 
 function dibujar(){
@@ -64,3 +127,4 @@ function dibujar(){
 }
 
 dibujar()
+iniciarEventos()
