@@ -1,6 +1,9 @@
 const canvas = document.querySelector('canvas')
 const ctx = canvas.getContext('2d')
 
+const $sprite = document.querySelector('#sprite')
+const $ladrillos = document.querySelector('#ladrillos')
+
 canvas.width = 448
 canvas.height = 400
 
@@ -15,12 +18,13 @@ let x = canvas.width / 2
 let y = canvas.height -30
 
 //velocidad de la pelota
-let dx = 2 
-let dy = -2
+let dx = -3
+let dy = -3
 
 //variables del palito
 const alturaPalo = 10
 const anchoPalo = 50
+const SENSIBILIDAD_PALETA = 8
 
 let paloX = (canvas.width - anchoPalo) / 2
 let paloY = canvas.height - alturaPalo - 10
@@ -41,8 +45,8 @@ function dibujarPelota(){
 
 
 function dibujarPalo(){
-    ctx.fillStyle = 'rgba(14, 120, 43, 0.55)'
-    ctx.fillRect(paloX, paloY, anchoPalo, alturaPalo)
+
+    ctx.drawImage($sprite, 29, 174, anchoPalo, alturaPalo, paloX, paloY, anchoPalo, alturaPalo)
 }
 function dibujarLadrillos(){}
 
@@ -59,13 +63,21 @@ function movimientoPelota(){
         dy= -dy
     }
 
+    //cuando la pelota toca el palo
+    const pelotaEsIgualPalitoX = x > paloX && x < paloX + anchoPalo
+    const pelotaTocaPalo = y + dy > paloY
+
     //rebota pelota abajo
 
-    if(y + dy > canvas.height - radioPelota){
-        console.log('Game Over')
-        document.location.reload()
+    if (pelotaEsIgualPalitoX && pelotaTocaPalo){
+        dy = -dy 
+    }else if (y + dy > canvas.height - radioPelota){
+
+        /*console.log('Game Over')
+        document.location.reload()*/
     }
 
+    
 
     x += dx
     y += dy
@@ -99,11 +111,11 @@ function keyUpHandler(event){
 
 }
 
-function movientoPalo(){
-    if(presionadoDerecha){
-        paloX += 7
-    }else if (presionadoIzquierda){
-        paloX -= 7
+function movimientoPalo(){
+    if(presionadoDerecha && paloX < canvas.width - anchoPalo){
+        paloX += SENSIBILIDAD_PALETA
+    }else if (presionadoIzquierda && paloX > 0 ){
+        paloX -= SENSIBILIDAD_PALETA
     }
 }
 
@@ -118,7 +130,7 @@ function dibujar(){
     //colisiones y movimientos
     deteccionColision()
     movimientoPelota()
-    movientoPalo()
+    movimientoPalo()
 
     window.requestAnimationFrame(dibujar)
 
