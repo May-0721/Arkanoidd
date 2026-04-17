@@ -1,19 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arkanoid - Maylin Franco</title>
+    <title>Arkanoid - Maylin</title>
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-    <canvas>
-        
-    </canvas>
 
-    <img hidden id="sprite" src="assets/sprite.png" alt="">
-    <img hidden id="ladrillos" src="assets/ladrillos.png" alt="">
+<div id="menu">
+    <h1>ARKANOID</h1>
+    <button onclick="iniciarJuego()">Jugar</button>
+</div>
 
-    <script src="js/index.js"></script>
+<div id="gameOver" style="display:none;">
+    <h1>GAME OVER</h1>
+    <button onclick="volverMenu()">Volver al menú</button>
+</div>
+
+<canvas></canvas>
+
+<img hidden id="sprite" src="assets/sprite.png">
+<img hidden id="ladrillos" src="assets/ladrillos.png">
+
+<script src="js/index.js"></script>
 </body>
 </html>
