@@ -1,7 +1,8 @@
 body{
     background-color: #111;
+    margin: 0;
+    overflow: hidden;
 }
-
 
 canvas{
     background: url(../assets/fondo.png);
@@ -9,4 +10,20 @@ canvas{
     border-bottom: transparent;
     margin: 0 auto;
     display: block;
+}
+
+/* MENÚ */
+#menu, #gameOver{
+    position: absolute;
+    width: 100%;
+    top: 40%;
+    text-align: center;
+    color: white;
+    font-family: Arial;
+}
+
+button{
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
 }
